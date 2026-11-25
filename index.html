@@ -1,108 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home - Rokori</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link href="assets/icons/icons.css" rel="stylesheet" type="text/css" />
+    <style>
+        /* Estilos extra para el Panel de Admin y Anuncios de Rokori */
+        #rokori-banner {
+            background-color: #0066ff;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            display: none;
+        }
+        .admin-btn {
+            background-color: #e2231a;
+            color: white !important;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 13px;
+            border: none;
+        }
+        .admin-btn:hover { background-color: #b81b14; }
+        
+        /* Ventana del Panel de Admin */
+        #admin-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.75);
+            justify-content: center;
+            align-items: center;
+        }
+        .admin-box {
+            background-color: #232527;
+            color: white;
+            padding: 24px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            font-family: sans-serif;
+        }
+        .admin-box h2 { margin-top: 0; border-bottom: 1px solid #393b3d; padding-bottom: 10px; }
+        .admin-box label { display: block; margin-top: 12px; font-size: 13px; color: #bdbebe; }
+        .admin-box input {
+            width: 100%; padding: 8px; margin-top: 4px;
+            background: #111214; border: 1px solid #393b3d;
+            color: white; border-radius: 4px; box-sizing: border-box;
+        }
+        .admin-actions { margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-save { background: #00b06f; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-close { background: #393b3d; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+        .verified-badge { color: #0066ff; font-weight: bold; margin-left: 2px; }
+    </style>
 </head>
 <body>
+
+<!-- Banner Global de Administrador -->
+<div id="rokori-banner">¡Bienvenidos a Rokori 2026!</div>
 
 <div id="header">
     <!-- 1st Div -->
     <div>
         <!-- Hamburger Menu -->
-        <svg
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    d="M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6Z"
-    fill="currentColor"
-  />
-  <path
-    d="M2 12.0322C2 11.4799 2.44772 11.0322 3 11.0322H21C21.5523 11.0322 22 11.4799 22 12.0322C22 12.5845 21.5523 13.0322 21 13.0322H3C2.44772 13.0322 2 12.5845 2 12.0322Z"
-    fill="currentColor"
-  />
-  <path
-    d="M3 17.0645C2.44772 17.0645 2 17.5122 2 18.0645C2 18.6167 2.44772 19.0645 3 19.0645H21C21.5523 19.0645 22 18.6167 22 18.0645C22 17.5122 21.5523 17.0645 21 17.0645H3Z"
-    fill="currentColor"
-  />
-</svg>
-    <!-- Roblox Icon -->
-    <img src="assets/icons/roblox.png" width="36" height="30">
-    <!-- 2nd part -->
-    <!-- <div id="endpart"> -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 6C2 5.44772 2.44772 5 3 5H21C21.5523 5 22 5.44772 22 6C22 6.55228 21.5523 7 21 7H3C2.44772 7 2 6.55228 2 6Z" fill="currentColor"/>
+            <path d="M2 12.0322C2 11.4799 2.44772 11.0322 3 11.0322H21C21.5523 11.0322 22 11.4799 22 12.0322C22 12.5845 21.5523 13.0322 21 13.0322H3C2.44772 13.0322 2 12.5845 2 12.0322Z" fill="currentColor"/>
+            <path d="M3 17.0645C2.44772 17.0645 2 17.5122 2 18.0645C2 18.6167 2.44772 19.0645 3 19.0645H21C21.5523 19.0645 22 18.6167 22 18.0645C22 17.5122 21.5523 17.0645 21 17.0645H3Z" fill="currentColor"/>
+        </svg>
+        <!-- Logo -->
+        <img src="assets/icons/roblox.png" width="36" height="30" onerror="this.src='https://placehold.co'">
+        
         <ul>
-            <li>
-                <a class="headerLinks">Discover</a>
-            </li>
-            <li>
-                <a class="headerLinks">Marketplace</a>
-            </li>
-            <li>
-                <a class="headerLinks">Create</a>
-            </li>
-            <li>
-                <a class="headerLinks">Robux</a>
-            </li>
+            <li><a class="headerLinks" href="#main">Discover</a></li>
+            <li><a class="headerLinks" href="#main">Marketplace</a></li>
+            <li><a class="headerLinks" href="#main">Create</a></li>
+            <li><a class="headerLinks" href="#main">Korbux</a></li>
+            <li><button class="admin-btn" onclick="openAdmin()">Admin Panel</button></li>
         </ul>
         
-        
-            <div id="searchbar">
-                <i style="margin-right: 15px;" class="gg-search"></i>
-                <p>Search</p>
-            <!-- </div> -->
+        <div id="searchbar">
+            <i style="margin-right: 15px;" class="gg-search"></i>
+            <p>Search</p>
         </div>
-    
     </div>
+
     <!-- 2nd Div -->
     <div>
         <div class="left">
-            <img id="pfp" src="assets/icons/headshot.png">
-            <span style="margin:4px;">cx622</span>
-            <span style="color:#bdbebe;">13+</span>
+            <img id="pfp" src="assets/icons/headshot.png" onerror="this.src='https://placehold.co'">
+            <span id="display-username" style="margin:4px;">Admin</span><span class="verified-badge">☑</span>
+            <span style="color:#bdbebe; margin-left: 4px;">13+</span>
         </div>
         <div class="right">
-            <!-- <i style="margin-right: 10px;" class="gg-bell"></i> -->
-            <img id="icon-robux" src="assets/icons/robux.png"></img>
-            <span>103</span>
-            <img id="settings" src="assets/icons/settings.png">
+            <img id="icon-robux" src="assets/icons/robux.png" onerror="this.src='https://placehold.co'">
+            <span id="display-currency" style="margin: 0 8px;">666M+</span>
+            <img id="settings" src="assets/icons/settings.png" style="cursor:pointer;" onclick="openAdmin()" onerror="this.src='https://placehold.co⚙'">
         </div>
-        </div>
-    
+    </div>
 </div>
 <!-- end of header -->
+
 <div id="main">
     <div>
         <h1 id="heading">Home</h1>
         <div class="flex" style="display: flex; justify-content: space-between;">
-            <h2 style="margin-bottom: 1vh;">Friends (-5)</h2>
+            <h2 id="friends-count" style="margin-bottom: 1vh;">Friends (3)</h2>
             <div class="flex">
-                <p><a href="#">See All</a></a></p>
+                <p><a href="#">See All</a></p>
                 <i class="gg-arrow-right"></i>
             </div>
         </div>
     </div>
+
     <!-- Friendslist -->
     <div id="friendslist" class="flex">
         <div>
-            <img src="assets/icons/headshot.png">
-            <p>user</p>
+            <img src="assets/icons/headshot.png" onerror="this.src='https://placehold.co'">
+            <p>RokoriStaff</p>
         </div>
         <div>
-            <img src="assets/icons/headshot.png">
-            <p>user</p>
+            <img src="assets/icons/headshot.png" onerror="this.src='https://placehold.co'">
+            <p>Builder</p>
         </div>
         <div>
-            <img src="assets/icons/headshot.png">
-            <p>user</p>
+            <img src="assets/icons/headshot.png" onerror="this.src='https://placehold.co'">
+            <p>Moderator</p>
         </div>
     </div>
+
     <!-- Games section -->
     <div id="gameslist">
         <!-- Row 1 -->
@@ -110,173 +146,65 @@
             <div class="flex">
                 <h2 style="margin-bottom: 1vh;">Continue</h2>
                 <div class="flex">
-                    <p><a href="#">See All</a></a></p>
+                    <p><a href="#">See All</a></p>
                     <i class="gg-arrow-right"></i>
                 </div>
             </div>
-            <div style="justify-content: flex-start;" class="flex">
+            <div id="continue-games" style="justify-content: flex-start; flex-wrap: wrap; gap: 15px;" class="flex">
                 <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
+                    <img class="gameimage" src="assets/icons/game.png" onerror="this.src='https://placehold.co'">
+                    <h4>Rokori Hangout 2026</h4>
                     <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
+                        <img height="16" width="16" src="assets/icons/thumbs.png" onerror="this.style.display='none'">
+                        <span style="margin-right: 1vw;">98%</span>
+                        <img height="16" width="16" src="assets/icons/players.png" onerror="this.style.display='none'">
+                        <span>1.2k</span>
                     </div>
                 </div>
                 <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
+                    <img class="gameimage" src="assets/icons/game.png" onerror="this.src='https://placehold.co'">
+                    <h4>Classic Mega Obby</h4>
                     <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
+                        <img height="16" width="16" src="assets/icons/thumbs.png" onerror="this.style.display='none'">
+                        <span style="margin-right: 1vw;">89%</span>
+                        <img height="16" width="16" src="assets/icons/players.png" onerror="this.style.display='none'">
+                        <span>840</span>
                     </div>
                 </div>
                 <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
+                    <img class="gameimage" src="assets/icons/game.png" onerror="this.src='https://placehold.co'">
+                    <h4>Sword Fights on the Heights</h4>
                     <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
-                    </div>
-                </div>
-                <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
-                    <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
-                    </div>
-                </div>
-                <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
-                    <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
-                    </div>
-                </div>
-                <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
-                    <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
+                        <img height="16" width="16" src="assets/icons/thumbs.png" onerror="this.style.display='none'">
+                        <span style="margin-right: 1vw;">94%</span>
+                        <img height="16" width="16" src="assets/icons/players.png" onerror="this.style.display='none'">
+                        <span>2.5k</span>
                     </div>
                 </div>
             </div>
-            
-            
         </div>
+
         <!-- Row 2 -->
         <div class="rows">
             <div class="flex">
-                <h2 style="margin-bottom: 1vh;">Survival</h2>
+                <h2 style="margin-bottom: 1vh;">Popular en Rokori</h2>
                 <div class="flex">
-                    <p><a href="#">See All</a></a></p>
+                    <p><a href="#">See All</a></p>
                     <i class="gg-arrow-right"></i>
                 </div>
             </div>
-            <div style="justify-content: flex-start;" class="flex">
+            <div style="justify-content: flex-start; flex-wrap: wrap; gap: 15px;" class="flex">
                 <div>
-                    <img class="gameimage" src="assets/icons/game.png">
+                    <img class="gameimage" src="assets/icons/game.png" onerror="this.src='https://placehold.co'">
                     <h4>Survival Simulator</h4>
                     <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
+                        <img height="16" width="16" src="assets/icons/thumbs.png" onerror="this.style.display='none'">
                         <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
+                        <img height="16" width="16" src="assets/icons/players.png" onerror="this.style.display='none'">
                         <span>6.3k</span>
                     </div>
                 </div>
                 <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
+                    <img class="gameimage" src="assets/icons/game.png" onerror="this.src='https://placehold.co'">
+                    <h4>Rokori Tycoon</h4>
                     <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
-                    </div>
-                </div>
-                <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
-                    <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
-                    </div>
-                </div>
-                <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
-                    <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
-                    </div>
-                </div>
-                <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
-                    <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
-                    </div>
-                </div>
-                <div>
-                    <img class="gameimage" src="assets/icons/game.png">
-                    <h4>Survival Simulator</h4>
-                    <div class="game-text">
-                        <img height="16" width="16" src="assets/icons/thumbs.png">
-                        <span style="margin-right: 1vw;">77%</span>
-                        <img height="16" width="16" src="assets/icons/players.png">
-                        <span>6.3k</span>
-                    </div>
-                </div>
-                </div>
-            </div>
-            
-        </div>
-        <!-- End of Rows -->
-        
-    </div>
-    <!-- End of Games Section -->
-    
-
-</div>
-<!-- End of Main -->
-<footer>
-    <ul id="footer">
-        <li class="footerlinks"><a href="#">About Us</a></li>
-        <li class="footerlinks"><a href="#">Jobs</a></li>
-        <li class="footerlinks"><a href="#">Blog</a></li>
-        <li class="footerlinks"><a href="#">Parents</a></li>
-        <li class="footerlinks"><a href="#">Gift Cards</a></li>
-        <li class="footerlinks"><a href="#">Help</a></li>
-        <li class="footerlinks"><a href="#">Terms</a></li>
-        <li class="footerlinks"><a href="#">Accessibility</a></li>
-        <li class="footerlinks"><a href="#">Privacy</a></li>
-    </ul>
-    <hr>
-    <div>
-        
-    </div>
-</footer>
-</body>
-</html>
